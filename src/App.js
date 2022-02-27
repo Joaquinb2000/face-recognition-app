@@ -89,6 +89,7 @@ displayBox= (margins)=>{
 }
 
 onPaste = (event) =>{
+  console.log ("This is paste: ", event.clipboardData.getData('Text'))
   this.setState({input: event.clipboardData.getData('Text')});
 }
 
