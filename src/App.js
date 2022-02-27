@@ -13,6 +13,7 @@ const basic= {
   box: {},
   ImageURL: '',
   input: '',
+  validURL: true,
   route: "signin",
   isSignedIn: false,
   user: {
@@ -101,6 +102,7 @@ onInputChange = (event) =>{
 
 onSubmit= async () =>{
   this.setState({box:{}});
+  this.setState({validURL: true});
   this.setState({ImageURL: this.state.input});
   const response = await this.useAPI();
   if (response !== undefined)
@@ -118,6 +120,7 @@ onSubmit= async () =>{
       this.setState(Object.assign(this.state.user, {entries : count}))
     }
       catch(err){
+        this.setState({validURL:false})
         console.log ("An error happened: ", err)
     }
 }
@@ -139,7 +142,7 @@ onRouteChange= (place) => {
     const signOrRegister=(((this.state.route==='signin') || (this.state.route==='signout')) 
                           ? <Signin sign={this.onRouteChange} loadUser={this.loadUser}/>
                           : <Register sign={this.onRouteChange} loadUser={this.loadUser}/>)
-    const {name, entries}= this.state.user;
+    const {name, entries, validURL}= this.state.user;
     
     return (
       <div className='App'>
@@ -150,7 +153,8 @@ onRouteChange= (place) => {
          ?  <div>
               <Logo/>
               <Rank name={name} entries={entries}/>
-              <ImgLinkForm change={this.onInputChange} click={this.onSubmit} paste={this.onPaste}/>
+              <ImgLinkForm change={this.onInputChange} click={this.onSubmit} 
+                           paste={this.onPaste}        valid= {this.state.validURL}/>
               <FaceMatch resp={ImageURL} boxes={box} />
             </div>
           : (signOrRegister)
@@ -161,7 +165,7 @@ onRouteChange= (place) => {
 }
 
 const PartConfig= {
-  fpsLimit: 120,
+  fpsLimit: 80,
   interactivity: {
     events: {
       onClick: {
