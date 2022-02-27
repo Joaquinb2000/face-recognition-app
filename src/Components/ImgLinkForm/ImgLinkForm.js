@@ -4,7 +4,6 @@ import './ImgLinkForm.css'
 class ImgLinkForm extends Component {
     render(){
         const {change, click, valid, paste}= this.props;
-        console.log(valid)
         const badLink= !valid 
             ? <h2 className='tc'>Link is not valid</h2>
             : <></>;
