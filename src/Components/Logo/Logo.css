@@ -1,0 +1,15 @@
+.Logo {
+    display: flex;
+    justify-content: center;
+
+}
+
+.Logo .Tilt  {
+    background: linear-gradient(to top right, rgba(0, 51, 204, 1) 10%, rgb(0, 187, 204) 100%);
+}
+
+img{
+    height: 15vh;
+}
+
+
