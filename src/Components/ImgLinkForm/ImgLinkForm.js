@@ -17,6 +17,7 @@ class ImgLinkForm extends Component {
                         type="text" 
                         placeholder='Your URL goes here'
                         onKeyUp={change}
+                        onPaste={change}
                     />
                     <button onClick={click}
                         className=' shadow grow w-15 ba pa3  dib round2 white'>
