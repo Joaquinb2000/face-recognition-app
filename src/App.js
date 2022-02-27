@@ -44,7 +44,6 @@ loadUser= (data) =>{ //Gets user information
 useAPI= async () =>{ //Sends the state.input variable to the Clarifai API,
                      //and returns the response.
                      //If you send an invalid URL, return undefined
-  this.setState({box:{}});
   try{
     const change= await fetch('https://enigmatic-eyrie-77195.herokuapp.com/API', {
       method : 'post',
@@ -101,6 +100,7 @@ onInputChange = (event) =>{
 }
 
 onSubmit= async () =>{
+  this.setState({box:{}});
   this.setState({ImageURL: this.state.input});
   const response = await this.useAPI();
   if (response !== undefined)
