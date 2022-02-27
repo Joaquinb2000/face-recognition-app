@@ -87,6 +87,10 @@ displayBox= (margins)=>{
   this.setState({box: margins})
 }
 
+onPaste = (event) => {
+  this.setState({input: event.target.value})
+}
+
 onInputChange = (event) =>{
   this.setState({input: event.target.value});
 
@@ -145,7 +149,7 @@ onRouteChange= (place) => {
          ?  <div>
               <Logo/>
               <Rank name={name} entries={entries}/>
-              <ImgLinkForm change={this.onInputChange} click={this.onSubmit}/>
+              <ImgLinkForm change={this.onInputChange} click={this.onSubmit} paste={this.onPaste}/>
               <FaceMatch resp={ImageURL} boxes={box} />
             </div>
           : (signOrRegister)

@@ -3,7 +3,7 @@ import './ImgLinkForm.css'
 
 class ImgLinkForm extends Component {
     render(){
-        const {change, click}= this.props;
+        const {change, click, paste}= this.props;
 
         return (
             <div className='tc w-100'>
@@ -17,7 +17,7 @@ class ImgLinkForm extends Component {
                         type="text" 
                         placeholder='Your URL goes here'
                         onKeyUp={change}
-                        onPaste={change}
+                        onChange={change}
                     />
                     <button onClick={click}
                         className=' shadow grow w-15 ba pa3  dib round2 white'>
