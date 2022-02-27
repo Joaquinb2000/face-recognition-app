@@ -88,8 +88,11 @@ displayBox= (margins)=>{
   this.setState({box: margins})
 }
 
+onPaste = (event) =>{
+  this.setState({input: event.clipboardData.getData('Text')});
+}
+
 onInputChange = (event) =>{
-  console.log(event);
   this.setState({input: event.target.value});
 
   if (event.key=== 'Enter'){
@@ -135,11 +138,11 @@ onRouteChange= (place) => {
 
 
   render(){
-    const {box, ImageURL, isSignedIn}= this.state;
+    const {box, ImageURL, isSignedIn, validURL}= this.state;
     const signOrRegister=(((this.state.route==='signin') || (this.state.route==='signout')) 
                           ? <Signin sign={this.onRouteChange} loadUser={this.loadUser}/>
                           : <Register sign={this.onRouteChange} loadUser={this.loadUser}/>)
-    const {name, entries, validURL}= this.state.user;
+    const {name, entries}= this.state.user;
     
     return (
       <div className='App'>
@@ -151,7 +154,7 @@ onRouteChange= (place) => {
               <Logo/>
               <Rank name={name} entries={entries}/>
               <ImgLinkForm change={this.onInputChange} click={this.onSubmit} 
-                           paste={this.onPaste}        valid= {this.state.validURL}/>
+                           paste={this.onPaste}        valid= {validURL}/>
               <FaceMatch resp={ImageURL} boxes={box} />
             </div>
           : (signOrRegister)
