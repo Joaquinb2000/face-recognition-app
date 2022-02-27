@@ -13,9 +13,9 @@ const basic= {
   box: {},
   ImageURL: '',
   input: '',
-  validURL: true,
-  route: "signin",
-  isSignedIn: false,
+  validURL: true, //true
+  route: "signin", //signin
+  isSignedIn: false, //false
   user: {
     email  : "",
     id     : "",
@@ -88,12 +88,8 @@ displayBox= (margins)=>{
   this.setState({box: margins})
 }
 
-onPaste = (event) =>{
-  console.log ("This is paste: ", event)
-  this.setState({input: event.clipboardData.getData('Text')});
-}
-
 onInputChange = (event) =>{
+  //console.log (event)
   this.setState({input: event.target.value});
 
   if (event.key=== 'Enter'){
@@ -155,7 +151,7 @@ onRouteChange= (place) => {
               <Logo/>
               <Rank name={name} entries={entries}/>
               <ImgLinkForm change={this.onInputChange} click={this.onSubmit} 
-                           paste={this.onPaste}        valid= {validURL}/>
+                           valid= {validURL}/>
               <FaceMatch resp={ImageURL} boxes={box} />
             </div>
           : (signOrRegister)
