@@ -3,7 +3,7 @@ import './ImgLinkForm.css'
 
 class ImgLinkForm extends Component {
     render(){
-        const {change, click, paste, valid}= this.props;
+        const {change, click, valid}= this.props;
         console.log(valid)
         const badLink= !valid 
             ? <h2 className='tc'>Link was not valid. If on mobile try
@@ -25,7 +25,6 @@ class ImgLinkForm extends Component {
                         placeholder='Your URL goes here'
                         onKeyUp={change}
                         onChange={change}
-                        onPaste={paste}
                     />
                     <button onClick={click}
                         className=' shadow grow w-15 ba pa3  dib round2 white'>

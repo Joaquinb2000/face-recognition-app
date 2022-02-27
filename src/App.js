@@ -88,11 +88,8 @@ displayBox= (margins)=>{
   this.setState({box: margins})
 }
 
-onPaste = (event) => {
-  this.setState({input: event.target.value})
-}
-
 onInputChange = (event) =>{
+  console.log(event);
   this.setState({input: event.target.value});
 
   if (event.key=== 'Enter'){
