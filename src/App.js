@@ -89,7 +89,6 @@ displayBox= (margins)=>{
 }
 
 onInputChange = (event) =>{
-  //console.log (event)
   this.setState({input: event.target.value});
 
   if (event.key=== 'Enter'){
@@ -102,6 +101,7 @@ onSubmit= async () =>{
   this.setState({validURL: true});
   this.setState({ImageURL: this.state.input});
   const response = await this.useAPI();
+
   if (response !== undefined)
     try{
       this.displayBox(this.calculateFaceLocation(response));
@@ -151,7 +151,7 @@ onRouteChange= (place) => {
               <Logo/>
               <Rank name={name} entries={entries}/>
               <ImgLinkForm change={this.onInputChange} click={this.onSubmit} 
-                           valid= {validURL}/>
+                           valid= {validURL}    paste={this.onPaste}/>
               <FaceMatch resp={ImageURL} boxes={box} />
             </div>
           : (signOrRegister)

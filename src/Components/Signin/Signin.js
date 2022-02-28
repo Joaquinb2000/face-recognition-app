@@ -38,8 +38,8 @@ class Signin extends Component {
             .then(data => {
                 if (data.id){
                     this.props.loadUser(data)
-                    this.props.sign("home"
-                )}
+                    this.props.sign("home")
+                }
 
                 else
                     this.setState({incorrect: true}) 
