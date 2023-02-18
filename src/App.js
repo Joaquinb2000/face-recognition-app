@@ -46,7 +46,7 @@ useAPI= async () =>{ //Sends the state.input variable to the Clarifai API,
                      //and returns the response.
                      //If you send an invalid URL, return undefined
   try{
-    const change= await fetch('https://enigmatic-eyrie-77195.herokuapp.com/API', {
+    const change= await fetch('https://rough-snow-8880.fly.dev/API', {
       method : 'post',
       headers: { 'Content-Type': 'application/json'},
         body   : JSON.stringify({
@@ -105,8 +105,8 @@ onSubmit= async () =>{
   if (response !== undefined)
     try{
       this.displayBox(this.calculateFaceLocation(response));
-    
-      const change= await fetch('https://enigmatic-eyrie-77195.herokuapp.com/image', {
+
+      const change= await fetch('https://rough-snow-8880.fly.dev/image', {
         method : 'put',
         headers: { 'Content-Type': 'application/json'},
         body   : JSON.stringify({
@@ -129,18 +129,18 @@ onRouteChange= (place) => {
 
   else if(place=== 'home')
     this.setState({isSignedIn: true})
-    
+
   this.setState({route: place});
 }
 
 
   render(){
     const {box, ImageURL, isSignedIn, validURL}= this.state;
-    const signOrRegister=(((this.state.route==='signin') || (this.state.route==='signout')) 
+    const signOrRegister=(((this.state.route==='signin') || (this.state.route==='signout'))
                           ? <Signin sign={this.onRouteChange} loadUser={this.loadUser}/>
                           : <Register sign={this.onRouteChange} loadUser={this.loadUser}/>)
     const {name, entries}= this.state.user;
-    
+
     return (
       <div className='App'>
         <Particles className="Particles"
@@ -150,7 +150,7 @@ onRouteChange= (place) => {
          ?  <div>
               <Logo/>
               <Rank name={name} entries={entries}/>
-              <ImgLinkForm change={this.onInputChange} click={this.onSubmit} 
+              <ImgLinkForm change={this.onInputChange} click={this.onSubmit}
                            valid= {validURL}    paste={this.onPaste}/>
               <FaceMatch resp={ImageURL} boxes={box} />
             </div>

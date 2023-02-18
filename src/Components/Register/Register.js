@@ -43,20 +43,20 @@ class Register extends Component {
 
         else
             this.setState({password: event.target.value})
-      
+
         if (event.key=== 'Enter'){
             this.Ref.current.focus();
             this.Ref.current.click();
         }
       }
-    
+
     onSubmit= () => {
         this.normal();
         const {name, email, password} = this.state;
         const isValid = this.validate(name, email, password);
 
         if (isValid===0){
-                fetch('https://enigmatic-eyrie-77195.herokuapp.com/register', {
+                fetch('https://rough-snow-8880.fly.dev/register', {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json'},
                     body : JSON.stringify({
@@ -74,15 +74,15 @@ class Register extends Component {
                         }
 
                         else
-                            this.setState({registered: true}) 
+                            this.setState({registered: true})
                     })}
             else
-                this.setState({invalidCase: isValid}) 
+                this.setState({invalidCase: isValid})
     }
 
     render(){
         const {registered, invalidCase} = this.state;
-        const errorMsg= ['Registration fields can\'t be empty', 
+        const errorMsg= ['Registration fields can\'t be empty',
                          'Please enter a valid email',
                          'Password must be longer\n than 6 characters']
 
@@ -113,16 +113,16 @@ class Register extends Component {
                 </main>
                 </article>
                 <div className='tc'>
-                    {registered=== false 
-                    ? <></> : <h2 className="tc">Email registered already</h2>}    
+                    {registered=== false
+                    ? <></> : <h2 className="tc">Email registered already</h2>}
                     {this.state.invalidCase > 0
-                    ? <h2 className="tc "><p>{errorMsg[invalidCase-1]}</p></h2> : null}       
+                    ? <h2 className="tc "><p>{errorMsg[invalidCase-1]}</p></h2> : null}
                 </div>
             </div>
-            
+
         )
     }
-    
+
 }
 
 export default Register;
