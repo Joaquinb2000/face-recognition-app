@@ -68,13 +68,14 @@ calculateFaceLocation = (response)=>{ //Receives the Clarifai API response objec
   const width= Number(image.width);
   const height= Number(image.height);
 
-  if(response.outputs[0].data.regions!== undefined){
-    const boxMargins= response.outputs[0].data.regions.map(bounds => {
+  if(response.outputs[0].data.regions){
+    const boxMargins= response.outputs[0].data.regions.map(({region_info}) => {
+      const {top_row, left_col, bottom_row, right_col} = region_info.bounding_box
       const imgBounds={
-        topR   : (bounds.region_info.bounding_box.top_row * height),
-        leftC  : (bounds.region_info.bounding_box.left_col * width),
-        bottomR: (height - (bounds.region_info.bounding_box.bottom_row * height)),
-        rightC : (width - (bounds.region_info.bounding_box.right_col * width))
+        topR   : (top_row * height),
+        leftC  : (left_col * width),
+        bottomR: (height - (bottom_row * height)),
+        rightC : (width - (right_col * width))
       }
       return imgBounds
     })
