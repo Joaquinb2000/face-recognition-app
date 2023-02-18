@@ -1,9 +1,0 @@
-#DetectSpace{
-    width: 500px;
-    height: auto;
-}
-
-#box{
-    position: absolute;
-    box-shadow: 0 0 0 3px #3CAEA3 inset;
-}
