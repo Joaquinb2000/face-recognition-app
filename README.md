@@ -2,9 +2,14 @@
 
 It uses the old clarifaiJS API to recognize faces, and highlight them in uploaded images.
 
-#Frontend 
+#Frontend
   Made with React
 
 #Backend
   Server (NodeJS with ExpressJS) and database (PostgreSQL) to handle API calls, registering, and signing users.
   Deployed on Heroku.
+
+
+# Visit the live demo on:
+https://joaquinb2000.github.io/face-recognition-app/
+
