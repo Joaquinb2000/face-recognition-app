@@ -8,6 +8,7 @@ import Register from "./Components/Register/Register"
 import Signin from './Components/Signin/Signin';
 import FaceMatch from './Components/FaceMatch/FaceMatch';
 import Particles from 'react-tsparticles';
+import { serverCall } from './utils/serverCall';
 
 const basic= {
   box: {},
@@ -31,10 +32,9 @@ class App extends Component {
     this.state= basic
   }
 
-
 loadUser= (data) =>{ //Gets user information
   this.setState({user: {
-    email  : data.email,
+    email  : data.login_email,
     id     : data.id,
     name   : data.name,
     entries: data.entries,
@@ -46,19 +46,13 @@ useAPI= async () =>{ //Sends the state.input variable to the Clarifai API,
                      //and returns the response.
                      //If you send an invalid URL, return undefined
   try{
-    const change= await fetch('https://rough-snow-8880.fly.dev/API', {
-      method : 'post',
-      headers: { 'Content-Type': 'application/json'},
-        body   : JSON.stringify({
-          input: this.state.input
-        })
-      })
-      const borders= await change.json();
-      return await borders
-    }
-    catch(err){
-      return undefined;
-    }
+    const change= await serverCall('API', 'post', { input: this.state.input } )
+    const borders= await change.json();
+    return await borders
+  }
+  catch(err){
+    return undefined;
+  }
 }
 
 calculateFaceLocation = (response)=>{ //Receives the Clarifai API response object.
@@ -103,23 +97,16 @@ onSubmit= async () =>{
   this.setState({ImageURL: this.state.input});
   const response = await this.useAPI();
 
-  if (response !== undefined)
+  if (response)
     try{
       this.displayBox(this.calculateFaceLocation(response));
 
-      const change= await fetch('https://rough-snow-8880.fly.dev/image', {
-        method : 'put',
-        headers: { 'Content-Type': 'application/json'},
-        body   : JSON.stringify({
-            id: this.state.user.id
-        })
-      })
+      const change= await serverCall('image', 'put', { email: this.state.user.email })
       const count= await change.json();
       this.setState(Object.assign(this.state.user, {entries : count}))
     }
       catch(err){
         this.setState({validURL:false})
-        console.log ("An error happened: ", err)
     }
 }
 

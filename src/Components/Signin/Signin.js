@@ -1,5 +1,7 @@
 import React, {Component, createRef} from "react";
 import './Signin.css'
+import { serverCall } from "../../utils/serverCall";
+import { changeState, enterKeySubmit } from "../../utils/formSubmition";
 
 class Signin extends Component {
     constructor(props){
@@ -12,40 +14,22 @@ class Signin extends Component {
         }
     }
 
-    onSignInChange = (event) =>{
-        if (event.target.id === "email-address")
-            this.setState({email: event.target.value});
+    onChange = (event) =>{ changeState(event, this) }
 
-        else
-            this.setState({password: event.target.value})
-
-        if (event.key=== 'Enter'){
-            this.Ref.current.focus();
-            this.Ref.current.click();
-        }
-      }
+    keySubmit= (event) =>{ enterKeySubmit(event, this) }
 
     onSubmitSignIn= () => {
-        fetch('https://rough-snow-8880.fly.dev/signin', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json'},
-            body : JSON.stringify({
-                email: this.state.email,
-                password: this.state.password
-            })
+        const {email, password} = this.state
+        serverCall('signin', 'post', { email, password })
+        .then(response => response.json())
+        .then(data => {
+            if (data.id){
+                this.props.loadUser(data)
+                this.props.sign("home")
+            }
+            else this.setState({incorrect: true})
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.id){
-                    this.props.loadUser(data)
-                    this.props.sign("home")
-                }
-
-                else
-                    this.setState({incorrect: true})
-            })
     }
-
 
     render(){
         const { sign }= this.props;
@@ -53,21 +37,21 @@ class Signin extends Component {
     return (
         <div>
             <article className="br4 ba shadow-5 b--black-40 " >
-                <main className="pv5 black-80" id="wrapper">
+                <main className="pv5 black-80" id="wrapper" onKeyUp={this.keySubmit}>
                     <div className="measure tc" >
                         <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
                         <legend className="f2 fw6 ph0 mh0">Sign In</legend>
                         <div className="mt3">
-                            <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
-                            <input onKeyUp={this.onSignInChange}
+                            <label className="db fw6 lh-copy f6" htmlFor="email">Email</label>
+                            <input onChange={this.onChange}
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                                 type="email"
-                                name="email-address"
-                                id="email-address"/>
+                                name="email"
+                                id="email"/>
                         </div>
                         <div className="mv3">
                             <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
-                            <input onKeyUp={this.onSignInChange}
+                            <input onChange={this.onChange}
                                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                                 type="password"
                                 name="password"
@@ -92,7 +76,6 @@ class Signin extends Component {
             {this.state.incorrect=== false
             ? <></> : <h2 className="tc">Incorrect Email or Password</h2>}
         </div>
-
     )}
 }
 
